@@ -1,0 +1,52 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+.wrapper{
+    margin: 0 auto;
+    width: 800px;
+    height: 600px;
+}
+#whiteboard {
+    width: 600px;
+    height: 400px;
+    margin: auto auto;
+    border: 1px solid #bbb;
+
+}
+
+.sticker {
+    width: 130px;
+    height: 130px;
+    float: left;
+    border: 2px solid black;
+	cursor: pointer;
+
+}
+
+#stc1 {
+    background-color: gold;
+
+}
+
+#stc2 {
+    background-color: goldenrod;
+
+}
+
+#stc3 {
+    background-color: palegoldenrod;
+}
+.close{
+    width: 20px;
+    height: 20px;
+    float: right;
+    border: 1px solid white;
+    background: gray;
+}
+.string{
+width: 80%;
+height: 20%;
+margin-top: 40px;
+}
