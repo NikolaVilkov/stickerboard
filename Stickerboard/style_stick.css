@@ -1,52 +1,32 @@
-html,
-body {
-    margin: 0;
-    padding: 0;
-}
-.wrapper{
-    margin: 0 auto;
-    width: 800px;
-    height: 600px;
-}
-#whiteboard {
-    width: 600px;
-    height: 400px;
-    margin: auto auto;
-    border: 1px solid #bbb;
-
+body{
+    height: 100%;
+    overflow: hidden;
+    background: ghostwhite;
 }
 
-.sticker {
-    width: 130px;
-    height: 130px;
-    float: left;
-    border: 2px solid black;
-	cursor: pointer;
-
+html{
+    height: 100%;
 }
 
-#stc1 {
-    background-color: gold;
-
+.sticker_body{
+    width: 180px;
+    height: 100px;
+    background: wheat;
+    border: 1px solid burlywood;
+    position: absolute;
 }
 
-#stc2 {
-    background-color: goldenrod;
-
 }
-
-#stc3 {
-    background-color: palegoldenrod;
-}
-.close{
-    width: 20px;
-    height: 20px;
+.sticker_button{
+    width: 10%;
+    height: 20%;
     float: right;
-    border: 1px solid white;
-    background: gray;
+    background-color: chocolate;
 }
-.string{
-width: 80%;
-height: 20%;
-margin-top: 40px;
+
+.sticker_input{
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 15%;
+    height: 25%;
 }

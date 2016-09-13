@@ -1,63 +1,71 @@
 /**
  * Created by НИКОЛАЙ on 03.09.2016.
  */
-document.onmousedown = function(e) {
+var sticker = (function(){
 
-    var dragElement = e.target;
+    var desktop,
+        activeSticker,
+        zIndexCount = 1,
+        shiftX,
+        shiftY,
+        divSticker = "\
+		<button class='sticker_button'>x</button>\
+		<input class='sticker_input' />\
+	";
 
-    if (!dragElement.classList.contains('sticker')) return;
+    document.addEventListener('DOMContentLoaded', init, false);
 
-    var coords, shiftX, shiftY;
-
-    startDrag(e.clientX, e.clientY);
-
-    document.onmousemove = function(e) {
-        moveAt(e.clientX, e.clientY);
-    };
-
-    dragElement.onmouseup = function() {
-        finishDrag();
-    };
-
-    function startDrag(clientX, clientY) {
-
-        shiftX = clientX - dragElement.getBoundingClientRect().left;
-        shiftY = clientY - dragElement.getBoundingClientRect().top;
-
-        dragElement.style.position = 'fixed';
-
-        document.body.appendChild(dragElement);
-
-        moveAt(clientX, clientY);
-    };
-
-    function finishDrag() {
-        // конец переноса, перейти от fixed к absolute-координатам
-        dragElement.style.top = parseInt(dragElement.style.top) + pageYOffset + 'px';
-        dragElement.style.position = 'absolute';
-
-        document.onmousemove = null;
-        dragElement.onmouseup = null;
+    function init(){
+        desktop = document.body;
+        desktop.addEventListener('dblclick', addSticker, false);
+        desktop.addEventListener('mousedown', mousedown, false);
+        document.addEventListener('mousemove', mousemove, false);
+        desktop.addEventListener('mouseup', mouseup, false);
+        desktop.addEventListener('click', deleteSticker, false);
     }
 
-    function moveAt(clientX, clientY) {
-        // новые координаты
-        var newX = clientX - shiftX;
-        var newY = clientY - shiftY;
-
-        // зажать в границах экрана по горизонтали
-        if (newX < 0) newX = 0;
-        if (newX > document.documentElement.clientWidth - dragElement.offsetHeight) {
-            newX = document.documentElement.clientWidth - dragElement.offsetHeight;
+    function addSticker(e){
+        if(e.target == desktop)
+        {
+            var temp_sticker = document.createElement('div');
+            temp_sticker.className = 'sticker_body';
+            temp_sticker.innerHTML = divSticker;
+            temp_sticker.ondragstart = function(){
+                return false;
+            };
+            desktop.appendChild(temp_sticker);
+            temp_sticker.style.left = e.pageX - temp_sticker.offsetWidth / 2 + 'px';
+            temp_sticker.style.top = e.pageY - temp_sticker.offsetHeight / 2 + 'px';
         }
-
-        dragElement.style.left = newX + 'px';
-        dragElement.style.top = newY + 'px';
     }
-	
 
-    // отменим действие по умолчанию на mousedown
-    return false;
+    function mousedown(e){
+        var activeElement = e.target;
+        if(activeElement.className == 'sticker_body'){
+            activeSticker = activeElement;
+            shiftX = e.pageX - parseInt(activeSticker.style.left);
+            shiftY = e.pageY - parseInt(activeSticker.style.top);
+            activeSticker.style.zIndex = zIndexCount++;
+        }
+    }
 
-}		
+    function mousemove(e){
+        if(activeSticker){
+            activeSticker.style.left = e.pageX - shiftX + 'px';
+            activeSticker.style.top = e.pageY - shiftY + 'px';
+        }
+    }
+
+    function mouseup(){
+        activeSticker = null;
+    }
+
+    function deleteSticker(e){
+        var activeElement = e.target;
+        if(activeElement.className == 'sticker_button'){
+            activeElement.parentNode.remove();
+        }
+    }
+
+}());
 
